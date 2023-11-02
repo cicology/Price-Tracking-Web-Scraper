@@ -4,13 +4,14 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_cors import CORS
 
+##connects to local SQLite Database
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///database.db'
 
 db = SQLAlchemy(app)
 
-
+##Sets up different database tables using SQL connector
 class ProductResult(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(1000))
@@ -40,7 +41,7 @@ class TrackedProducts(db.Model):
         self.name = name
         self.tracked = tracked
 
-
+##These are the end points
 @app.route('/results', methods=['POST'])
 def submit_results():
     results = request.json.get('data')
